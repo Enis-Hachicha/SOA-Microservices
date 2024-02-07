@@ -1,6 +1,6 @@
 // taskSchema.js
 
-const { buildSchema } = require('graphql');
+const { buildSchema } = require("graphql");
 
 const taskSchema = buildSchema(`
     type Task {
