@@ -18,4 +18,7 @@ const run = async () => {
     }
   }, 1000);
 };
-run().catch(console.error);
+
+module.exports = {
+  run,
+};

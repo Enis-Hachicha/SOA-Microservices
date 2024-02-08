@@ -14,7 +14,7 @@ async function connect() {
     const connection = await mysql.createConnection(config);
     console.log("Connected to MySQL!");
     connection.execute(
-      `CREATE TABLE IF NOT EXISTS personnes ( id INTEGER PRIMARY KEY AUTO_INCREMENT, nom TEXT NOT NULL, address TEXT NOT NULL )`,
+      `CREATE TABLE IF NOT EXISTS messages ( id INTEGER PRIMARY KEY AUTO_INCREMENT, contenue TEXT NOT NULL )`,
       []
     );
     return connection;
@@ -41,6 +41,20 @@ connect()
 function executeQuery(sql, values) {
   return dbConnection.execute(sql, values);
 }
+//record each message
+eachMessage: async ({ topic, partition, message }) => {
+  try {
+    await connection.execute("INSERT INTO messages (value) VALUES (?)", [
+      message.value.toString(),
+    ]);
+    console.log("Message enregistré dans la base de données");
+  } catch (error) {
+    console.error(
+      "Erreur lors de l'insertion du message dans la base de données :",
+      error
+    );
+  }
+};
 
 // Additional helper functions such as createTable(), insertData(), etc., can be added below based on your requirements
 
